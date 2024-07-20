@@ -1,0 +1,14 @@
+= Programming Fundamentals I (COSC 1436)
+Michael Taylor <michael.taylor@tccd.edu>
+v1.0
+:toc:
+
+This is the documentation site for this course.
+
+== Set Up
+
+Refer to the link:setup/readme.adoc[Setup] section for important information on how to properly set up your computer for this course.
+
+== Getting Started
+
+Refer to the link:gettingstarted/readme.adoc[Getting Started] guide for help on using the tools in this class.

@@ -1,0 +1,68 @@
+= Solutions and Projects
+Michael Taylor <michael.taylor@tccd.edu>
+v1.0
+:toc:
+
+== Projects
+
+A project is a set of files and related resources that ultimately can be packaged into a single binary (i.e. an executable, library or DLL).
+Projects in the IDE have functionality represent the code you are working with. At least one project must be loaded before most commands will work.
+
+Projects are given a type when they are created. The project type determines information such as:
+
+* The language being used for the source files.
+* The generated output.
+* The types of files that can be added to the project.
+* The targeted runtime.
+
+While some of this information can be changed after a project is created most cannot. Be sure to choose the most appropriate project type when creating the project.
+
+Some common project types include:
+
+Class Library::
+A collection of code that can be imported into other projects.
+Console Application::
+A command-line based application similar to the `Command Prompt` window.
+SQL Database::
+A project for creating and managing a SQL database for use in applications.
+
+One of the features that makes Visual Studio so useful is that the available projects can be extended by third parties to include other types of projects as needed.
+
+Each project is stored in the file system under its own folder. 
+Multiple projects cannot share the same folder. 
+Within the project’s folder are the files that make up the project and any output from building the project.
+
+As projects get bigger it often becomes useful to break them up into a series of separate projects.
+This simplifies development and helps support reuse.
+Unfortunately, this adds complexity as each project may be in a different state 
+(ex. Building, debugging, etc.).
+
+== Solutions
+
+A solution is a logical collection of projects.
+A solution, by itself, does nothing and produces nothing.
+It is simply a grouping of projects.
+As an example assume your application consists of the following projects.
+
+* Web project for customers to use.
+* Windows Forms project for managing the backend system.
+* Class library for containing the shared business code.
+* SQL database project for storing the database logic.
+
+To run this code you would need to compile each project in the correct order.
+If everything compiles you can then run the code.
+
+Rather than having to do this manually, the IDE uses a solution to wrap all these projects into a single, logical collection.
+To compile all the projects you would compile the solution.
+To run the projects you would run the solution. When performing an operation at the solution level it is run on all the projects in the solution. Most commands in the IDE require a solution.
+
+Even in a single project environment, a solution is still present.
+Depending upon the settings in VS `(Tools\Options -> Projects and Solutions -> General -> Always show solution)` you may or may not see the solution node in Solution Explorer.
+On disk the solution is represented as a folder with a single `.sln` file in it. Projects contained within the solution appear as subfolders of the solution.
+ 
+CAUTION: Folder structures are critical to the IDE. Do not ever change the folder structure of a solution or any of its projects. Doing so will cause serious problems. When copying projects from one machine to another it is mandatory that you copy the entire solution folder and not just the projects and/or files you’re using.
+
+NOTE: Projects within a solution are still independent of each other. Setting up dependencies between projects requires additional steps that depend upon the project type and language being used. 
+
+Refer to the section on link:solution-explorer.adoc[Solution Explorer] for information on how to work with solutions in the IDE.
+
