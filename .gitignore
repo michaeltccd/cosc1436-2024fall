@@ -30,8 +30,9 @@
 *.exe
 *.out
 *.app
-/.vs
-/classwork/Chapter1/.vs/Chapter1
-/classwork/Chapter1/x64/Debug
-/classwork/Chapter1/HelloWorld/x64/Debug
+.vs/
+x64/
+x86/
+bin/
+obj/
 *.user
