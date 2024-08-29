@@ -21,10 +21,15 @@ int main()
     std::cout << "Hello\tWorld\n";
 
     std::cout << "Hello \"Bob\"";
-
-    //File paths
-    std::cout << "C:\\windows\\temp";
-    //std::cout << R"C:\windows\temp";
+    
+    // String literals - double quote encased
+    //    Escape sequence - special meaning to compiler, starts with a \, only works in literals
+    //        \n = newline
+    //        \t = tab
+    //        \\ = \
+    //        \" = "
+    //File paths are the most painful
+    std::cout << "C:\\windows\\temp";    
 
     // Variables
     //   Named memory location to store data    
@@ -33,7 +38,8 @@ int main()
     // 
     // variable-decl ::= T id [ '=' E ] { ',' id [ '=' E ] }* ';'
     int length;
-    length = 0;
+    length = 0;  
+    //int length = 0; //Preferred
 
     int releaseYear = 1900;    
     int rating = 3, stars = 5;
