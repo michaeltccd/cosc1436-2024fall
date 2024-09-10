@@ -8,6 +8,7 @@ DOUBLE_QUOTE::= '"'
 EQUAL       ::= '='
 EXP         ::= 'E'
 FALSE       ::= 'false'
+INPUT_STREAM  ::= '>>'
 LBRACE      ::= '{'
 LPAREN      ::= '('
 MINUS       ::= '-'
@@ -17,7 +18,7 @@ RBRACE      ::= '}'
 RPAREN      ::= ')'
 SEMICOLON   ::= ';'
 SINGLE_QUOTE::= '''
-STREAM_OP   ::= '<<'
+OUTPUT_STREAM  ::= '<<'
 TRUE        ::= 'true'
 
 ## Primitives
@@ -68,5 +69,7 @@ stmt-list ::= simple-stmt
 block-stmt  ::= LBRACE stmt* RBRACE
 simple-stmt ::= expr 
               | output-stmt
-output-stmt ::= std::cout STREAM_OP expr { STREAM_OP expr }*
+output-stmt ::= std::cout OUTPUT_STREAM expr { OUTPUT_STREAM expr }*
+input-stmt  ::= std::cin INPUT_STREAM expr { INPUT_STREAM expr }*
+              | std::getline LPAREN std::cin COMMA expr RPAREN
 ```
