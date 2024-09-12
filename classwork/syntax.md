@@ -1,43 +1,20 @@
-## Symbols
-
-ASTERISK    ::= '*'
-BACKWARD_SLASH  ::= '/'
-COMMA       ::= ','
-DOT         ::= '.'
-DOUBLE_QUOTE::= '"'
-EQUAL       ::= '='
-EXP         ::= 'E'
-FALSE       ::= 'false'
-INPUT_STREAM  ::= '>>'
-LBRACE      ::= '{'
-LPAREN      ::= '('
-MINUS       ::= '-'
-PERCENT     ::= '%'
-PLUS        ::= '+'
-RBRACE      ::= '}'
-RPAREN      ::= ')'
-SEMICOLON   ::= ';'
-SINGLE_QUOTE::= '''
-OUTPUT_STREAM  ::= '<<'
-TRUE        ::= 'true'
-
 ## Primitives
 
 ```
 number          ::= digit+
 literal         ::= string_literal | char_literal | int_literal | float_literal | bool_literal
-bool_literal    ::= TRUE | FALSE
-char_literal    ::= SINGLE_QUOTE char SINGLE_QUOTE
-int_literal     ::= [ PLUS | MINUS ] number
-float_literal   ::= int_literal DOT number
-                  | int_literal EXP [ PLUS | MINUS ] number
-string_literal  ::= DOUBLE_QUOTE * DOUBLE_QUOTE
+bool_literal    ::= true | false
+char_literal    ::= '.'
+int_literal     ::= [+ | -] number
+float_literal   ::= int_literal . number
+                  | int_literal (E | e) [+ | -] number
+string_literal  ::= "..."
 ```
 
 ## Variables
 
 ```
-variable-decl ::= T id [ EQUAL expr ] { COMMA id [ EQUAL expr ] }* SEMICOLON
+variable-decl ::= T id [ = expr ] { , id [ = expr ] }* ;
 ```
 
 ## Expressions
@@ -45,31 +22,46 @@ variable-decl ::= T id [ EQUAL expr ] { COMMA id [ EQUAL expr ] }* SEMICOLON
 ```
 expr ::= simple-expr
        | assign-expr
+       | type-cast
 
 simple-expr ::= arithmetic-expr
               | literal
-              | sizeof LPAREN expr RPAREN
+              | sizeof ( expr )
 
 arithmetic-expr ::= expr arithmetic-op expr
                   | unary-op expr
-arithmetic-op ::= PLUS | MINUS | ASTERISK | BACKWARD_SLASH | PERCENT
-unary-op ::= PLUS | MINUS
+arithmetic-op ::= + | - | * | / | %
+unary-op ::= + | -
 
-assign-expr ::= expr EQUAL expr
-combination-expr ::= expr arithmetic-op EQUAL expr
+assign-expr ::= expr = expr
+combination-expr ::= expr arithmetic-op = expr
+
+type-cast ::= static_cast<T>(expr)
+            | (T)expr
 ```
 
 ## Statements
 
 ```
-stmt ::= stmt-list SEMICOLON
+stmt ::= stmt-list ;
 
 stmt-list ::= simple-stmt
             | block-stmt
-block-stmt  ::= LBRACE stmt* RBRACE
+block-stmt  ::= { stmt* }
 simple-stmt ::= expr 
               | output-stmt
-output-stmt ::= std::cout OUTPUT_STREAM expr { OUTPUT_STREAM expr }*
-input-stmt  ::= std::cin INPUT_STREAM expr { INPUT_STREAM expr }*
-              | std::getline LPAREN std::cin COMMA expr RPAREN
+output-stmt ::= std::cout << output_expr { << output_expr }*
+output-expr ::= expr | iomanip
+iomanip     ::= setw(int) | left | right | fixed | setprecision(int) | setfill(char)
+input-stmt  ::= std::cin >> expr { >> expr }*
+              | std::getline(std::cin, expr)
+```
+
+## Math Functions
+
+```
+math-funcs ::= abs(expr) | ceil(expr) | floor(expr)   
+             | pow(expr) | sqrt(expr)  
+             | exp(expr) | log(expr)
+             | round(expr) | trunc(expr)
 ```
