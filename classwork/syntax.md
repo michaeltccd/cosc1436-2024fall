@@ -27,6 +27,7 @@ expr ::= simple-expr
 simple-expr ::= arithmetic-expr
               | literal
               | sizeof ( expr )
+              | relational-expr
 
 arithmetic-expr ::= expr arithmetic-op expr
                   | unary-op expr
@@ -35,6 +36,9 @@ unary-op ::= + | -
 
 assign-expr ::= expr = expr
 combination-expr ::= expr arithmetic-op = expr
+
+relational-expr ::= expr relational-op expr
+relational-op ::= < | <= | > | >= | == | !=
 
 type-cast ::= static_cast<T>(expr)
             | (T)expr
@@ -47,6 +51,7 @@ stmt ::= stmt-list ;
 
 stmt-list ::= simple-stmt
             | block-stmt
+            | if-stmt
 block-stmt  ::= { stmt* }
 simple-stmt ::= expr 
               | output-stmt
@@ -55,6 +60,8 @@ output-expr ::= expr | iomanip
 iomanip     ::= setw(int) | left | right | fixed | setprecision(int) | setfill(char)
 input-stmt  ::= std::cin >> expr { >> expr }*
               | std::getline(std::cin, expr)
+
+if-stmt ::= if (Eb) S;       
 ```
 
 ## Math Functions
