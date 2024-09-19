@@ -28,6 +28,7 @@ simple-expr ::= arithmetic-expr
               | literal
               | sizeof ( expr )
               | relational-expr
+              | logical-expr
 
 arithmetic-expr ::= expr arithmetic-op expr
                   | unary-op expr
@@ -39,6 +40,10 @@ combination-expr ::= expr arithmetic-op = expr
 
 relational-expr ::= expr relational-op expr
 relational-op ::= < | <= | > | >= | == | !=
+
+logical-expr ::= expr && expr
+               | expr || expr
+               | !expr
 
 type-cast ::= static_cast<T>(expr)
             | (T)expr
@@ -61,7 +66,8 @@ iomanip     ::= setw(int) | left | right | fixed | setprecision(int) | setfill(c
 input-stmt  ::= std::cin >> expr { >> expr }*
               | std::getline(std::cin, expr)
 
-if-stmt ::= if (Eb) S;       
+if-stmt ::= if (Eb) S [else-stmt];       
+else-stmt ::= else S
 ```
 
 ## Math Functions
