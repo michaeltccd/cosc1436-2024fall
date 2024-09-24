@@ -15,6 +15,17 @@ string_literal  ::= "..."
 
 ```
 variable-decl ::= T id [ = expr ] { , id [ = expr ] }* ;
+
+type-decl ::= struct-decl
+            | enum-decl
+
+struct-decl         ::= struct id { struct-member-list } ;
+struct-member-list  ::= struct-member*
+struct-member       ::= field-decl
+field-decl          ::= T id [ = expr ] ;
+
+enum-decl   ::= enum id { enum-member } ;
+enum-member ::= id [ = expr ] ;
 ```
 
 ## Expressions
@@ -29,6 +40,7 @@ simple-expr ::= arithmetic-expr
               | sizeof ( expr )
               | relational-expr
               | logical-expr
+              | conditional-expr
 
 arithmetic-expr ::= expr arithmetic-op expr
                   | unary-op expr
@@ -47,6 +59,8 @@ logical-expr ::= expr && expr
 
 type-cast ::= static_cast<T>(expr)
             | (T)expr
+
+conditional-expr ::= Eb ? E : E
 ```
 
 ## Statements
@@ -57,6 +71,7 @@ stmt ::= stmt-list ;
 stmt-list ::= simple-stmt
             | block-stmt
             | if-stmt
+            | switch-stmt
 block-stmt  ::= { stmt* }
 simple-stmt ::= expr 
               | output-stmt
@@ -68,6 +83,12 @@ input-stmt  ::= std::cin >> expr { >> expr }*
 
 if-stmt ::= if (Eb) S [else-stmt];       
 else-stmt ::= else S
+
+switch-stmt ::= switch (Ei) { case-statement-list } ;
+case-statement-list ::= case-statement* [ default-statement ]
+case-statement ::= case Eci : S ;
+default-statement ::= default : S ;
+break-statement ::= break
 ```
 
 ## Math Functions
