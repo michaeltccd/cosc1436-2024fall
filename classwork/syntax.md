@@ -34,6 +34,7 @@ enum-member ::= id [ = expr ] ;
 expr ::= simple-expr
        | assign-expr
        | type-cast
+       | prepostfix-expr
 
 simple-expr ::= arithmetic-expr
               | literal
@@ -46,6 +47,11 @@ arithmetic-expr ::= expr arithmetic-op expr
                   | unary-op expr
 arithmetic-op ::= + | - | * | / | %
 unary-op ::= + | -
+
+prepostfix-expr ::= variable++
+                  | ++variable
+                  | variable--
+                  | --variable
 
 assign-expr ::= expr = expr
 combination-expr ::= expr arithmetic-op = expr
@@ -67,11 +73,12 @@ conditional-expr ::= Eb ? E : E
 
 ```
 stmt ::= stmt-list ;
-
 stmt-list ::= simple-stmt
             | block-stmt
             | if-stmt
             | switch-stmt
+            | while-stmt
+
 block-stmt  ::= { stmt* }
 simple-stmt ::= expr 
               | output-stmt
@@ -89,6 +96,8 @@ case-statement-list ::= case-statement* [ default-statement ]
 case-statement ::= case Eci : S ;
 default-statement ::= default : S ;
 break-statement ::= break
+
+while-stmt ::= while (Eb) S ;
 ```
 
 ## Math Functions

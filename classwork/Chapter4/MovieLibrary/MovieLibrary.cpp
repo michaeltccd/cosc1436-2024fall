@@ -25,11 +25,19 @@ struct Movie
 //Integral data type with named values
 enum MenuCommand
 {
-    MC_AddMovie,
-    MC_EditMovie,
-    MC_DeleteMovie,
-    MC_ViewMovie
+    //MC_Begin,
+    AddMovie = 1,    //const int MenuCommand::MC_AddMovie = 0;
+    EditMovie,
+    DeleteMovie,
+    ViewMovie,
+    //MC_End
 };
+
+//enum class TestEnum
+//{
+//    AddMovie
+//};
+//TestEnum testValue = TestEnum::MC_AddMovie;//MC_AddMovie;//TestEnum::MC_AddMovie;
 
 int main()
 {
@@ -74,98 +82,106 @@ int main()
     cout << "D)elete Movie" << endl;
     cout << "V)iew Movie" << endl;
 
+    //While-stmt ::= while (Eb) S;
+    //  Pretest, S executes zero or more times
+    
     //// Get input
-    char input;
-    cin >> input;
+    MenuCommand menuCommand = (MenuCommand)0;
+    //bool done = false;
+    //while (!done)
+    //while (menuCommand == 0); infinite loop, don't do it
 
-    MenuCommand menuCommand;
-
-    switch (input)
+    while (menuCommand == 0)
     {
-        case 'A':
-        case 'a': menuCommand = 1; break;
+        char input;
+        cin >> input;        
 
-        case 'E':
-        case 'e': menuCommand = 2; break;
+        switch (input)
+        {
+            case 'A':
+            case 'a': menuCommand = MenuCommand::AddMovie; break;
 
-        case 'D':
-        case 'd': menuCommand = 3; break;
+            case 'E':
+            case 'e': menuCommand = MenuCommand::EditMovie; break;
 
-        case 'V':
-        case 'v': menuCommand = 4; break;
+            case 'D':
+            case 'd': menuCommand = MenuCommand::DeleteMovie; break;
 
-        default: cout << "Bad input" << endl; break;
+            case 'V':
+            case 'v': menuCommand = MenuCommand::ViewMovie; break;
+
+            default: cout << "Bad input" << endl; break;
+        };
     };
+    cin.ignore();
+
+    //int shouldntWork = MenuCommand::MC_AddMovie;
+    //menuCommand = (MenuCommand)100;
 
     //// Handle menu command
     switch (menuCommand)
     {
-        case MenuCommand::MC_AddMovie:
-        case MenuCommand::MC_EditMovie:
-        case MenuCommand::MC_DeleteMovie:
-        case MenuCommand::MC_ViewMovie: cout << "Not implemented" << endl; break;
-    };
+        case MenuCommand::AddMovie:
+        case MenuCommand::EditMovie:
+        case MenuCommand::DeleteMovie:
+        case MenuCommand::ViewMovie: cout << "Not implemented" << endl; break;
+    };    
 
     ////// Add a new movie
     //Create a new movie
     Movie movie;// = {0};
 
     //Get required title
-    cout << "Enter a title: ";
-    //cin >> movie.Title;
-    getline(cin, movie.Title);
-
-    //Decision making - IF statement
-    // if-stmt ::= if (Eb) S ;
-    if (movie.Title == "")
+    while (movie.Title == "")
     {
-        cout << "ERROR: Title is required" << endl;
-
         cout << "Enter a title: ";
+        //cin >> movie.Title;
         getline(cin, movie.Title);
+
+        //Decision making - IF statement
+        // if-stmt ::= if (Eb) S ;
+        if (movie.Title == "")
+            cout << "ERROR: Title is required" << endl;
     };
 
     //Get run length, at least 0, minutes
-    cout << "Enter run length (in minutes): ";
-    cin >> movie.RunLength;
-    
-    //Nested if
-    //if (movie.RunLength <= 0)
-    //{
-    //    //Look at additional stuff...
-    //    
-    //    if (movie.RunLength < 0)
-    //    {
-    //        cout << "ERROR: Run length must be at least 0" << endl;
-
-    //        cout << "Enter run length (in minutes): ";
-    //        cin >> movie.RunLength;
-    //    };
-    //} else if (movie.RunLength > 1440)
-    //{
-    //    cout << "ERROR: Run length cannot be greater than a day" << endl;
-
-    //    cout << "Enter run length (in minutes): ";
-    //    cin >> movie.RunLength;
-    //};
-    if (movie.RunLength < 0 || movie.RunLength > 1440)
+    movie.RunLength = -1;
+    while (movie.RunLength < 0 || movie.RunLength > 1440)
     {
-        cout << "ERROR: Run length must be between 0 and 1440" << endl;
-
         cout << "Enter run length (in minutes): ";
         cin >> movie.RunLength;
+
+        //Nested if
+        //if (movie.RunLength <= 0)
+        //{
+        //    //Look at additional stuff...
+        //    
+        //    if (movie.RunLength < 0)
+        //    {
+        //        cout << "ERROR: Run length must be at least 0" << endl;
+
+        //        cout << "Enter run length (in minutes): ";
+        //        cin >> movie.RunLength;
+        //    };
+        //} else if (movie.RunLength > 1440)
+        //{
+        //    cout << "ERROR: Run length cannot be greater than a day" << endl;
+
+        //    cout << "Enter run length (in minutes): ";
+        //    cin >> movie.RunLength;
+        //};
+        if (movie.RunLength < 0 || movie.RunLength > 1440)
+            cout << "ERROR: Run length must be between 0 and 1440" << endl;
     };
 
     //Get release year, at least 1900
-    cout << "Enter release year (1900+): ";
-    cin >> movie.ReleaseYear;
-
-    if (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
+    while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
     {
-        cout << "ERROR: Release year must be between 1900 and 2100" << endl;
-
         cout << "Enter release year (1900+): ";
         cin >> movie.ReleaseYear;
+
+        if (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
+            cout << "ERROR: Release year must be between 1900 and 2100" << endl;
     };
 
     //Get the optional description
@@ -174,51 +190,52 @@ int main()
     getline(cin, movie.Description);
 
     //Get Is classic
-    char isClassic;
-    cout << "Is this a classic (Y/N)? ";
-    cin >> isClassic;
-
-    /*if (isClassic == 'Y')
-        movie.IsClassic = true;
-    else if (isClassic == 'y')
-        movie.IsClassic = true;
-    else if (isClassic == 'N')
-        movie.IsClassic = false;
-    else if (isClassic == 'n')
-        movie.IsClassic = false;*/
-    /*if (isClassic == 'Y' || isClassic == 'y')
-        movie.IsClassic = true;
-    else if (isClassic == 'N' || isClassic == 'n')
-        movie.IsClassic = false;
-    else
+    bool done = false;
+    while (!done)
     {
-        cout << "ERROR: You must enter Y or N";
-
+        char isClassic;
         cout << "Is this a classic (Y/N)? ";
         cin >> isClassic;
-    };*/
 
-    //Switch (select) statement - replacement for if-elseif where same expression compared to multiple values
-    // 1. Must compare a single expression to one or more constant values with equality
-    // 2. Switch expression must be an integral type
-    // 3. Each case label must be a compile-time constant expression
-    // 4. Each case label must be unique
-    switch (isClassic)
-    {
-        case 'Y': 
-        case 'y': movie.IsClassic = true; break;
-            
-        case 'N': 
-        case 'n': movie.IsClassic = false; break;
-
-        default:
+        /*if (isClassic == 'Y')
+            movie.IsClassic = true;
+        else if (isClassic == 'y')
+            movie.IsClassic = true;
+        else if (isClassic == 'N')
+            movie.IsClassic = false;
+        else if (isClassic == 'n')
+            movie.IsClassic = false;*/
+        /*if (isClassic == 'Y' || isClassic == 'y')
+            movie.IsClassic = true;
+        else if (isClassic == 'N' || isClassic == 'n')
+            movie.IsClassic = false;
+        else
         {
             cout << "ERROR: You must enter Y or N";
 
             cout << "Is this a classic (Y/N)? ";
             cin >> isClassic;
+        };*/
+
+        //Switch (select) statement - replacement for if-elseif where same expression compared to multiple values
+        // 1. Must compare a single expression to one or more constant values with equality
+        // 2. Switch expression must be an integral type
+        // 3. Each case label must be a compile-time constant expression
+        // 4. Each case label must be unique
+        switch (isClassic)
+        {
+            case 'Y':
+            case 'y': movie.IsClassic = true; done = true; break;
+
+            case 'N':
+            case 'n': movie.IsClassic = false; done = true; break;
+
+            default:
+            {
+                cout << "ERROR: You must enter Y or N";
+            };
         };
-    };       
+    };
     
     ///// Display movie details
     cout << "---------------" << endl;
