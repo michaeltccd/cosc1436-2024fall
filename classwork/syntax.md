@@ -48,10 +48,10 @@ arithmetic-expr ::= expr arithmetic-op expr
 arithmetic-op ::= + | - | * | / | %
 unary-op ::= + | -
 
-prepostfix-expr ::= variable++
-                  | ++variable
-                  | variable--
-                  | --variable
+prepostfix-expr ::= V++
+                  | ++V
+                  | V--
+                  | --V
 
 assign-expr ::= expr = expr
 combination-expr ::= expr arithmetic-op = expr
@@ -78,6 +78,9 @@ stmt-list ::= simple-stmt
             | if-stmt
             | switch-stmt
             | while-stmt
+            | for-stmt
+            | break-stmt
+            | continue-stmt
 
 block-stmt  ::= { stmt* }
 simple-stmt ::= expr 
@@ -88,16 +91,26 @@ iomanip     ::= setw(int) | left | right | fixed | setprecision(int) | setfill(c
 input-stmt  ::= std::cin >> expr { >> expr }*
               | std::getline(std::cin, expr)
 
-if-stmt ::= if (Eb) S [else-stmt];       
+if-stmt ::= if (expr) S [else-stmt];       
 else-stmt ::= else S
 
-switch-stmt ::= switch (Ei) { case-statement-list } ;
+switch-stmt ::= switch (expr) { case-statement-list } ;
 case-statement-list ::= case-statement* [ default-statement ]
-case-statement ::= case Eci : S ;
+case-statement ::= case expr : S ;
 default-statement ::= default : S ;
-break-statement ::= break
 
-while-stmt ::= while (Eb) S ;
+break-statement ::= break
+continue-statement ::= continue;
+
+while-stmt ::= while (expr) S ;
+
+for-stmt        ::= for ( [for-init-expr-list] ; [for-test-expr-list] ; [for-update-expr-list] ) S;
+for-init-expr-list ::= for-init-expr { , for-init-expr }*
+for-init-expr   ::= expr | T id = expr
+for-test-expr-list ::= for-test-expr { , for-test-expr }*
+for-test-expr   ::= expr
+for-update-expr-list ::= for-update-expr { , for-update-expr }*
+for-update-expr ::= expr
 ```
 
 ## Math Functions
