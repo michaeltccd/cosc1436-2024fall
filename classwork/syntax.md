@@ -75,12 +75,17 @@ conditional-expr ::= Eb ? E : E
 stmt ::= stmt-list ;
 stmt-list ::= simple-stmt
             | block-stmt
-            | if-stmt
-            | switch-stmt
-            | while-stmt
-            | for-stmt
+            | decision-stmt
+            | loop-stmt
             | break-stmt
             | continue-stmt
+            
+decision-stmt ::= if-stmt
+                | switch-stmt
+
+loop-stmt ::= while-stmt
+            | for-stmt
+            | do-stmt
 
 block-stmt  ::= { stmt* }
 simple-stmt ::= expr 
@@ -103,6 +108,7 @@ break-statement ::= break
 continue-statement ::= continue;
 
 while-stmt ::= while (expr) S ;
+do-stmt    ::= do S while (expr) ;
 
 for-stmt        ::= for ( [for-init-expr-list] ; [for-test-expr-list] ; [for-update-expr-list] ) S;
 for-init-expr-list ::= for-init-expr { , for-init-expr }*
