@@ -35,15 +35,43 @@ enum MenuCommand
     //MC_End
 };
 
-int main()
+//function definition - defines a function and what it does
+// declaration ::= declares the existence of something and what it is (var declaration)
+//                 Used by the compiler to recognize the use of the identifier
+//                 Must be declared before usage
+// definition ::= what it does (var defined) (for linker)
+// Function names are verbs representing actions
+//   Casing: Pascal casing, camel casing
+
+/// Displays main menu
+void DisplayMenu()
 {
-    //// Show menu
     cout << "Movie Library" << endl;
     cout << "---------------" << endl;
     cout << "A)dd Movie" << endl;
     cout << "E)dit Movie" << endl;
     cout << "D)elete Movie" << endl;
     cout << "V)iew Movie" << endl;
+}
+
+/// Handles the menu selection
+void HandleMenu()
+{
+    //HACK: Fix this
+    MenuCommand menuCommand = (MenuCommand)0;
+    switch (menuCommand)
+    {
+        case MenuCommand::AddMovie:
+        case MenuCommand::EditMovie:
+        case MenuCommand::DeleteMovie:
+        case MenuCommand::ViewMovie: cout << "Not implemented" << endl; break;
+    };
+}
+
+int main()
+{
+    //Function call ::= id ();    
+    DisplayMenu();
 
     //// Get input
     MenuCommand menuCommand = (MenuCommand)0;
@@ -72,13 +100,14 @@ int main()
     cin.ignore();
 
     //// Handle menu command
-    switch (menuCommand)
+    HandleMenu();
+    /*switch (menuCommand)
     {
         case MenuCommand::AddMovie:
         case MenuCommand::EditMovie:
         case MenuCommand::DeleteMovie:
         case MenuCommand::ViewMovie: cout << "Not implemented" << endl; break;
-    };
+    };*/
 
     ////// Add a new movie
     //Create a new movie
