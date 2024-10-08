@@ -28,6 +28,20 @@ enum-decl   ::= enum id { enum-member } ;
 enum-member ::= id [ = expr ] ;
 ```
 
+## Functions
+
+```
+function-defn ::= function-decl function-body
+function-decl ::= function-return-type id ( [ parameter-list ] )
+function-body ::= { stmt* } [ ; ]
+function-return-type ::= T | void
+
+parameter-list ::= parameter { , parameter }*
+                  | void
+parameter ::= parameter-type [ id [ = expr ] ]
+parameter-type ::= T
+```
+
 ## Expressions
 
 ```
@@ -35,6 +49,7 @@ expr ::= simple-expr
        | assign-expr
        | type-cast
        | prepostfix-expr
+       | function-call
 
 simple-expr ::= arithmetic-expr
               | literal
@@ -67,6 +82,10 @@ type-cast ::= static_cast<T>(expr)
             | (T)expr
 
 conditional-expr ::= Eb ? E : E
+
+function-call ::= id ( [ argument-list ] )
+argument-list ::= argument { , argument }*
+argument ::= expr
 ```
 
 ## Statements
@@ -79,6 +98,8 @@ stmt-list ::= simple-stmt
             | loop-stmt
             | break-stmt
             | continue-stmt
+            | function-call
+            | return-stmt
             
 decision-stmt ::= if-stmt
                 | switch-stmt
@@ -117,6 +138,8 @@ for-test-expr-list ::= for-test-expr { , for-test-expr }*
 for-test-expr   ::= expr
 for-update-expr-list ::= for-update-expr { , for-update-expr }*
 for-update-expr ::= expr
+
+return-stmt ::= return [ expr ] ;
 ```
 
 ## Math Functions
