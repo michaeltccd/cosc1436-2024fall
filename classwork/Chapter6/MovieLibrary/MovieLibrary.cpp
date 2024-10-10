@@ -35,11 +35,13 @@ enum MenuCommand
     //MC_End
 };
 
-//function definition - defines a function and what it does
-// declaration ::= declares the existence of something and what it is (var declaration)
+// function ::= Reusable block of code
+//              Benefits: reusability, maintainability, readability, security
+// function definition - Defines a function and what it does (for linker)
+// declaration ::= Declares the existence of something and what it is (var declaration)
 //                 Used by the compiler to recognize the use of the identifier
 //                 Must be declared before usage
-// definition ::= what it does (var defined) (for linker)
+// 
 // Function names are verbs representing actions
 //   Casing: Pascal casing, camel casing
 
