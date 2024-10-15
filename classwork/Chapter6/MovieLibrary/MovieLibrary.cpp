@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include "Terminal.h"
 
 using namespace std;
 
@@ -53,44 +54,71 @@ enum MenuCommand
 MenuCommand g_menuCommand = (MenuCommand)0;
 Movie g_movie;
 
+//Function prototypes (function forwarding)
+
+void AddMovie();
+void DeleteMovie();
+void EditMovie();
+void ViewMovie(Movie);
+
+void DisplayMenu();
+void HandleMenu(MenuCommand);
+
+int main()
+{
+    do
+    {
+        //Function call ::= id ();    
+        DisplayMenu();
+
+        //// Handle menu command
+        HandleMenu(g_menuCommand);
+    } while (true);
+}
+
 void AddMovie()
 {
     Movie movie;
 
     //Get required title
-    do
+    movie.Title = ReadString("Enter a title: ", true);
+    /*do
     {
         cout << "Enter a title: ";
         getline(cin, movie.Title);
 
         if (movie.Title == "")
             cout << "ERROR: Title is required" << endl;
-    } while (movie.Title == "");
+    } while (movie.Title == "");*/
 
     //Get run length, at least 0, minutes
-    do
+    movie.RunLength = ReadInt("Enter run length (in minutes): ", 0, 1440);
+    /*do
     {
         cout << "Enter run length (in minutes): ";
         cin >> movie.RunLength;
 
         if (movie.RunLength < 0 || movie.RunLength > 1440)
             cout << "ERROR: Run length must be between 0 and 1440" << endl;
-    } while (movie.RunLength < 0 || movie.RunLength > 1440);
+    } while (movie.RunLength < 0 || movie.RunLength > 1440);*/
 
     //Get release year, at least 1900
-    while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
+    movie.ReleaseYear = ReadInt("Enter release year (1900+): ", 1900, 2100);
+    /*while (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
     {
         cout << "Enter release year (1900+): ";
         cin >> movie.ReleaseYear;
 
         if (movie.ReleaseYear < 1900 || movie.ReleaseYear > 2100)
             cout << "ERROR: Release year must be between 1900 and 2100" << endl;
-    };
+    };*/
 
     //Get the optional description
-    cout << "Enter optional description: ";
     cin.ignore();
-    getline(cin, movie.Description);
+    movie.Description = ReadString("Enter optional description: ");
+    /*cout << "Enter optional description: ";
+    cin.ignore();
+    getline(cin, movie.Description);*/
 
     //Get Is classic
     bool done = false;
@@ -119,10 +147,11 @@ void AddMovie()
     //Get genre(s)
     for (int index = 0; index < 5; ++index)  // = 0, < N  (rarely) = 1, <= N
     {
-        cout << "Enter optional genre " << (index + 1) << ": ";
+        string genre = ReadString("Enter optional genre ");
+        //cout << "Enter optional genre " << (index + 1) << ": ";
 
-        string genre;
-        getline(cin, genre);
+        //string genre;
+        //getline(cin, genre);
         if (genre == "")
             break; //Exits the loop
 
@@ -143,7 +172,7 @@ void EditMovie()
     cout << "EditMovie" << endl;
 }
 
-void ViewMovie ( Movie movie )
+void ViewMovie(Movie movie)
 {
     ///// Display movie details
     cout << "---------------" << endl;
@@ -197,10 +226,13 @@ void DisplayMenu()
     g_menuCommand = menuCommand;
 }
 
+// Parameter Kind
+//   Input ::= read in function, any valid expression as the argument
+
 /// Handles the menu selection
 /// @param menuCommand The command to handle
-void HandleMenu ( MenuCommand menuCommand )
-{    
+void HandleMenu(MenuCommand menuCommand)
+{
     switch (menuCommand)
     {
         case MenuCommand::MC_AddMovie: AddMovie(); break;
@@ -208,16 +240,4 @@ void HandleMenu ( MenuCommand menuCommand )
         case MenuCommand::MC_DeleteMovie: DeleteMovie(); break;
         case MenuCommand::MC_ViewMovie: ViewMovie(g_movie); break;
     };
-}
-
-int main()
-{
-    do
-    {
-        //Function call ::= id ();    
-        DisplayMenu();
-
-        //// Handle menu command
-        HandleMenu(g_menuCommand);
-    } while (true);
 }
