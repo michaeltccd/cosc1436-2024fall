@@ -107,7 +107,6 @@ void SwitchDemo()
     } while (true);
 }
 
-
 int main()
 {
     /*std::cout << Factorial(3) << " " << Factorial2(3) << std::endl;
