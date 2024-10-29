@@ -18,6 +18,7 @@ variable-decl ::= T id [ = expr ] { , id [ = expr ] }* ;
 
 type-decl ::= struct-decl
             | enum-decl
+            | array-decl
 
 struct-decl         ::= struct id { struct-member-list } ;
 struct-member-list  ::= struct-member*
@@ -34,12 +35,12 @@ enum-member ::= id [ = expr ] ;
 function-defn ::= function-decl function-body
 function-decl ::= function-return-type id ( [ parameter-list ] )
 function-body ::= { stmt* } [ ; ]
-function-return-type ::= T | void
+function-return-type ::= T | void | T[]
 
 parameter-list ::= parameter { , parameter }*
                   | void
 parameter ::= parameter-type [ id [ = expr ] ]
-parameter-type ::= T
+parameter-type ::= T | T& T[] 
 ```
 
 ## Expressions
@@ -50,6 +51,7 @@ expr ::= simple-expr
        | type-cast
        | prepostfix-expr
        | function-call
+       | array-element
 
 simple-expr ::= arithmetic-expr
               | literal
@@ -107,6 +109,7 @@ decision-stmt ::= if-stmt
 loop-stmt ::= while-stmt
             | for-stmt
             | do-stmt
+            | for-range-stmt
 
 block-stmt  ::= { stmt* }
 simple-stmt ::= expr 
@@ -140,6 +143,18 @@ for-update-expr-list ::= for-update-expr { , for-update-expr }*
 for-update-expr ::= expr
 
 return-stmt ::= return [ expr ] ;
+```
+
+## Arrays
+
+```
+array-decl ::= T id [ array-size ]
+array-size ::= expr
+
+array-element ::= id [ array-index ]
+array-index ::= expr
+
+for-range-stmt ::= for ( T id : arr ) S;
 ```
 
 ## Math Functions
