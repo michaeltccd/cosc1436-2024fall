@@ -19,6 +19,7 @@ variable-decl ::= T id [ = expr ] { , id [ = expr ] }* ;
 type-decl ::= struct-decl
             | enum-decl
             | array-decl
+            | pointer-decl
 
 struct-decl         ::= struct id { struct-member-list } ;
 struct-member-list  ::= struct-member*
@@ -52,6 +53,7 @@ expr ::= simple-expr
        | prepostfix-expr
        | function-call
        | array-element
+       | pointer-expr
 
 simple-expr ::= arithmetic-expr
               | literal
@@ -155,6 +157,17 @@ array-element ::= id [ array-index ]
 array-index ::= expr
 
 for-range-stmt ::= for ( T id : arr ) S;
+```
+
+## Pointers
+
+```
+pointer-decl ::= T* id
+pointer-expr ::= address-expr | dereference-expr
+address-expr ::= & variable
+               | & array-element
+               | & function-id
+dereference-expr ::= * expr
 ```
 
 ## Math Functions
