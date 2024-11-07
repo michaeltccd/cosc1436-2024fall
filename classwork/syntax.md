@@ -163,11 +163,18 @@ for-range-stmt ::= for ( T id : arr ) S;
 
 ```
 pointer-decl ::= T* id
-pointer-expr ::= address-expr | dereference-expr
+pointer-expr ::= address-expr 
+               | dereference-expr
+               | null-expr
+               | new-expr
+               | delete-expr
 address-expr ::= & variable
                | & array-element
-               | & function-id
+               | & function-id               
 dereference-expr ::= * expr
+null-expr    ::= NULL | nullptr
+new-expr     ::= new T | new T[]
+delete-expr  ::= delete expr | delete[] expr
 ```
 
 ## Math Functions
