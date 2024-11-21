@@ -99,9 +99,156 @@ void WideCharDemo()
     };
 }
 
+// "C" strings - 
+// C++ strings only work in C++
+// #include <cstring>
+//   strlen(const char*) size_t ::= returns number of characters
+void CStringDemo()
+{
+    const char* name = "Bob"; //const char*
+    char nameArray[] = "Bob";
+
+    const int MaximumName = 101;
+    char buffer[MaximumName] = {0};
+
+    // String length (in chars)
+    //   strlen(const char*) size_t
+    /*std::cout << "Enter first name: ";
+    std::cin >> buffer;
+
+    int len = strlen(buffer);
+    buffer[len++] = ' ';    
+
+    std::cout << "Enter last name: ";
+    std::cin >> &buffer[len];
+    
+    std::cout << buffer << std::endl;
+    */
+
+    char firstName[MaximumName] = {0};
+    std::cout << "Enter first name: ";
+    std::cin >> firstName;
+
+    char lastName[MaximumName] = {0};
+    std::cout << "Enter last name: ";
+    std::cin >> lastName;
+
+    char fullName[MaximumName + MaximumName] = {0};
+
+    //Copy and concat
+    //   strcpy(char*, const char*)
+    //   strncpy(char*, const char*, int length)
+    //   strcat(char*, const char*)
+    //   strncat(char*, const char*, int length)
+    //strcpy(fullName, firstName);
+    strncpy_s(fullName, firstName, MaximumName);
+    strcat_s(fullName, " ");
+    strncat_s(fullName, lastName, MaximumName);
+
+    std::cout << fullName << std::endl;
+
+    //Comparison
+    //  strcmp(const char*, const char*) int
+    //  _stricmp(const char*, const char*) int
+    //if (firstName == lastName)
+    if (_stricmp(firstName, lastName) == 0)
+        std::cout << lastName << std::endl;
+    else
+        std::cout << fullName << std::endl;
+
+    //Find in string - returns pointer to start of second string in first, or nullptr
+    // strstr (const char*, const char*) const char*
+    // strstr (char*, const char*) char*
+    char productName[] = "Microsoft Windows 11";
+    char operatingSystem[] = "Windows";
+
+    char* pPos = strstr(productName, operatingSystem);
+    if (pPos != nullptr)
+        std::cout << pPos << std::endl;
+}
+
+void NumberStringDemo()
+{
+    while (true)
+    {
+        char buffer[100] = {0};
+
+        std::cout << "Enter a number: ";
+        std::cin >> buffer;
+
+        // Conversion
+        //    #include <cstdlib>
+        //    atoi(const char*) int :: Converts string to int, or 0
+        //    atol(const char*) long :: converts string to long, or 0
+        //    atof(const char*) double :: Converts string to double
+        //bool isNumber = IsIntegral()
+        int value = atoi(buffer);
+        std::cout << "Value as int = " << value << std::endl;
+    };
+}
+
+void CPlusPlusStringDemo()
+{    
+    //char firstName[MaximumName] = {0};
+    std::string firstName;
+    std::cout << "Enter first name: ";
+    std::cin >> firstName;
+
+    //char lastName[MaximumName] = {0};
+    std::string lastName;
+    std::cout << "Enter last name: ";
+    std::cin >> lastName;
+
+    //char fullName[MaximumName + MaximumName] = {0};
+    std::string fullName;
+
+    // String copy/assign string value ::= use assignment operator
+    fullName = firstName;
+    //strncpy_s(fullName, firstName, MaximumName);
+
+    // String concat ::= Use addition operator
+    //                  | .append(const char*)
+    fullName += " ";
+    //strcat_s(fullName, " ");
+    
+    //fullName += lastName;
+    fullName.append(lastName);
+    //strncat_s(fullName, lastName, MaximumName);
+
+    std::string middleName;
+    std::cout << "Enter middle name: ";
+    std::cin >> middleName;
+
+    // Find a string in a string ::= .find(const char*, [index]) int, returns index of value, if any
+    // Insert a string ::= .insert(index, const char*) 
+    //Insert middle name
+    int index = fullName.find(" ");  //strstr
+    fullName.insert(index, middleName);   //strcat(str+index)
+
+    std::cout << fullName << std::endl;
+
+    // Get subsstring ::= .substr(index, [count]) std::string, returns substring starting at index
+    //Get last name
+    std::string onlyLastName = fullName.substr(index + 1);
+
+    //Misc
+    //   .c_str() const char*, returns pointer to C-string, not stable or writable
+    //   .length() size_t, returns # of characters in string
+    //   .empty() bool, returns if the string is empty
+    //   .clear() void, clears the string
+    const char* pCString = fullName.c_str();  //Get pointer to underlying buffer
+    int len = fullName.length();              //Length, in characters
+    bool isEmpty = fullName.empty();  //Is there a string?
+    fullName.clear();                         //Empties the string
+    //fullName = "";
+
+}
+
 int main()
 {    
     //CharDemo();
-    WideCharDemo();
+    //WideCharDemo();
     //StringDemo();
+    //CStringDemo();
+    NumberStringDemo();
 }
