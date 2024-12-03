@@ -1,6 +1,0 @@
-Another line 1
-Another line 2
-Another line 3
-Text 1
-Text 2
-Text 3
